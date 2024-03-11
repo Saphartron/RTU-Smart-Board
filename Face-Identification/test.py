@@ -6,3 +6,4 @@ print("Git Checking!\n----------------------------------------------------------
 print("Git Checking!\n--------------------------------------------------------------2")
 
 tool = FC("/resources/Steve.jpg")
+tool.createPerson("/resources/dataset_photos","/resources/models")
