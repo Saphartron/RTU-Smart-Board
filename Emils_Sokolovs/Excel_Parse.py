@@ -30,4 +30,4 @@ if match:
     if extra_category:
         print(f'Papildus informacija: {extra}')
 else:
-    print('Pattern did not match.')
+    print('Pattern didnt match.')
