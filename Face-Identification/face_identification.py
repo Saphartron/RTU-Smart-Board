@@ -5,7 +5,7 @@ from face_recognition.face_recognition_cli import image_files_in_folder
 class FaceIdentification:
     def __init__(self,photoUrl: str) -> None:
         self.photo = face_recognition.load_image_file(photoUrl)
-        print(self.photo)
+        print("Photo Created")
         pass
     def createPerson(self,getPhotoDir,saveDir):
         for images in os.listdir(getPhotoDir):
