@@ -13,3 +13,9 @@ class FaceIdentification:
                      image = face_recognition.load_image_file(img_path)
                      break
         pass
+    def train():
+         #----
+         pass
+    def identify():
+         #----
+         pass
