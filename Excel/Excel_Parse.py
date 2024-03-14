@@ -19,7 +19,7 @@ if match:
     if room == "Zoom":
         room_output = "Zoom"
     else:
-        room_output = f'{room} Kabinets'
+        room_output = f'{room} Kabinetssssss'
 
     extra_category = 'Extra' if extra else None
 
