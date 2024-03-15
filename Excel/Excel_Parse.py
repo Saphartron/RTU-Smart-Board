@@ -9,7 +9,7 @@ pattern2 = re.compile(r'(?P<subject>.*?)(?:plkst\.)(?P<time_range>.*?)\s*(?:prof
 
 match1 = pattern1.match(cell_value)
 match2 = pattern2.match(cell_value)
-1
+
 if match1:
     subject = match1.group('subject').strip()
     raw_type = match1.group('type').strip()
