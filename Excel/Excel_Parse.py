@@ -7,15 +7,15 @@ cell_value = "Elektrotehnika un elektronika lk. doc.L.Lavrinoviča 116"
 pattern1 = re.compile(r'(?P<subject>.*?)\s*(?P<type>lk\.|pr\.|lb)\s*(?P<teacher>.*?)\s*(?P<room>\d+|Zoom)(?P<extra>.*?)$')
 pattern2 = re.compile(r'(?P<subject>.*?)(?:plkst\.)(?P<time_range>.*?)\s*(?:prof\.|lekt\.|doc\.)\s*(?P<professor>.*?)\s*(?P<room>\d+|Zoom)$')
 
-match = pattern1.match(cell_value)
+match1 = pattern1.match(cell_value)
 match2 = pattern2.match(cell_value)
-
-if match:
-    subject = match.group('subject').strip()
-    raw_type = match.group('type').strip()
-    teacher = match.group('teacher').strip()
-    room = match.group('room').strip()
-    extra = match.group('extra').strip()
+1
+if match1:
+    subject = match1.group('subject').strip()
+    raw_type = match1.group('type').strip()
+    teacher = match1.group('teacher').strip()
+    room = match1.group('room').strip()
+    extra = match1.group('extra').strip()
 
     type_mapping = {'lk.': 'Lekcija', 'pr.': 'Praktiska nodarbība', 'lb': 'Laboratorijas darbs'}
 
@@ -43,4 +43,4 @@ elif match2:
     print(f'Prieksmets: {subject}')
     print(f'Laiks: {time_range}')
     print(f'Lektors: {professor}')
-    print(f'Vieta: {room}')
+    print(f'Notiksanas vieta: {room}')
