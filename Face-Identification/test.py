@@ -8,9 +8,9 @@ print("Git Checking!\n----------------------------------------------------------
 print("Git Checking!\n--------------------------------------------------------------2")
 
 config = {}
-with open("..\RTU-Smart-Board\Face-Identification\config.json","r") as jsonFile:
+with open("config.json","r") as jsonFile:
     config = json.loads(jsonFile.read())
 steves = Person(config=config,Name="Steve Jobs")
-#tool = FC("/resources/Steve.jpg")
+tool = FC("/resources/Steve.jpg")
 #tool.identify()
 #write...
