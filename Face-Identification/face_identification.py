@@ -14,19 +14,22 @@ class FaceIdentification:
     def identify(self):
         #write...
         pass
+    def tmpresult(self):
+        #
+        pass
 class CreatePerson:
     #constructor
-    def __init__(self,datasetUrl,Name) -> None:
-        self.folder = datasetUrl
+    def __init__(self,config:dict,Name:str) -> None:
+        self.configuration = config
         self.Name = Name
         pass
     
-    
-    def createPerson(self,getPhotoDir,saveDir):
-        for images in os.listdir(getPhotoDir):
-                for img_path in image_files_in_folder(os.path.join(getPhotoDir,images)):
-                     image = face_recognition.load_image_file(img_path)
-                     break
+    def createPerson(self):
+        filesUrl = self.configuration.get("dataSetUrl")
+        something = []
+        for images in os.listdir(filesUrl):
+                for img_path in image_files_in_folder(os.path.join(filesUrl,images)):
+                     something.append(img_path)
         #write...
         pass
     def train():
