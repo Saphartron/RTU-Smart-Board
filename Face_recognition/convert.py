@@ -1,69 +1,50 @@
-import os
-import json
 import dlib
 import cv2
+import json
+import os
+from skimage import io
 
-PREDICTOR_PATH = "1testFacecapt/bot/shape_predictor_68_face_landmarks.dat"
+sp = dlib.shape_predictor('Authenticator/bot/shape_predictor_68_face_landmarks.dat')
+facerec = dlib.face_recognition_model_v1('Authenticator/bot/dlib_face_recognition_resnet_model_v1.dat')
+detector = dlib.get_frontal_face_detector()
+face_cascade = cv2.CascadeClassifier('Authenticator/bot/haarcascade_frontalface_default.xml')
 
-def detect_face(image_path):
-    image = cv2.imread(image_path)
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
-    detector = dlib.get_frontal_face_detector()
-
-    faces = detector(gray)
-
-    return faces
-
-def extract_face_features(image, face):
-    predictor = dlib.shape_predictor(PREDICTOR_PATH)
-    landmarks = predictor(image, face)
-    face_features = []
-
-    for i in range(68):
-        x = landmarks.part(i).x
-        y = landmarks.part(i).y
-        face_features.append((x, y))
-
-    return face_features
-
-def update_json_data(json_data, name, surname, face_features):
+def update_json_data(json_data, group, number, name, surname, face_descriptor):
+    face_descriptor_list = [value for value in face_descriptor]
+    
     data = {
         "group": group,
+        "number":number,
         "name": name,
         "surname": surname,
-        "face_features": face_features
+        "face_features": face_descriptor_list
     }
     json_data.append(data)
 
 if __name__ == "__main__":
-    group = input("Noradi savu studiju programmu: ")
-    name = input("Vards: ")
-    surname = input("Uzvards: ")
-    image_path = "1testFacecapt/f3.jpg"
-    output_dir = "1testFacecapt"
+    group = input("Ievadiet kursu: ")
+    number = input("Ievadiet numuru: ")
+    name = input("Ievadiet vārdu: ")
+    surname = input("Ievadiet uzvārdu: ")
+    img1 = io.imread('testfavecapt/f8.jpg')
+    dets = detector(img1, 1)
+
+    for k, d in enumerate(dets):
+        shape = sp(img1, d)
+        face_descriptor = facerec.compute_face_descriptor(img1, shape)
+
+    output_dir = ""
     output_file = os.path.join(output_dir, "data.json")
 
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    image = cv2.imread(image_path)
-    faces = detect_face(image_path)
-
-    if len(faces) == 0:
-        print("Лицо не обнаружено на изображении.")
+    if os.path.exists(output_file):
+        with open(output_file, 'r') as json_file:
+            json_data = json.load(json_file)
     else:
-        if os.path.exists(output_file):
-            with open(output_file, "r") as file:
-                json_data = json.load(file)
-        else:
-            json_data = []
+        json_data = []
 
-        for face in faces:
-            face_features = extract_face_features(image, face)
-            update_json_data(json_data, name, surname, face_features)
+    update_json_data(json_data, group, number, name, surname, face_descriptor)
 
-        with open(output_file, "w") as file:
-            json.dump(json_data, file, indent=4)
+    with open(output_file, 'w') as json_file:
+        json.dump(json_data, json_file, indent=4)
 
-        print("Paldies", name, surname, "tu esi registrets!")
+    print(name, surname, "ir registrets!")
