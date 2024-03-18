@@ -12,12 +12,6 @@ class FaceIdentification:
     
     
     def identify(self):
-        face_encoding = face_recognition.face_encodings(self.photo)[0]
-
-        small_frame = cv2.resize(None, (0, 0), fx=0.25, fy=0.25)
-        rgb_small_frame = small_frame[:, :, ::-1]
-        face_locations = face_recognition.face_locations(rgb_small_frame)
-        face_encodings = face_recognition.face_encodings(rgb_small_frame, face_locations)
         #write...
         pass
 class CreatePerson:
