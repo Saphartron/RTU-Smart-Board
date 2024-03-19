@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
     update_json_data(json_data, group, number, name, surname, face_descriptor)
 
-    with open(output_file, 'w') as json_file:
-        json.dump(json_data, json_file, indent=4)
+    with open(output_file, 'w', encoding='utf-8') as json_file:
+        json.dump(json_data, json_file, ensure_ascii=False, indent=4)
 
     print(name, surname, "ir registrets!")
