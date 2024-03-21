@@ -1,7 +1,8 @@
+import dlib
 import face_recognition
 import os
 import cv2
-from face_recognition.face_recognition_cli import image_files_in_folder
+#from face_recognition.face_recognition_cli import image_files_in_folder
 
 class FaceIdentification:
     #constructor
