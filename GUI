@@ -1,0 +1,76 @@
+import tkinter as tk
+from tkinter import messagebox
+import cv2
+from datetime import datetime
+
+class FaceRecognitionApp:
+    def __init__(self, master):
+        self.master = master
+        master.title("Face Recognition App")
+
+        # Создаем метку для даты и времени
+        self.label_date_time = tk.Label(master, text="")
+        self.label_date_time.pack()
+
+        # Создаем кнопку для запуска распознавания лиц
+        self.recognize_button = tk.Button(master, text="Распознать лицо", command=self.recognize_face)
+        self.recognize_button.pack()
+
+        # Создаем текстовое поле для вывода расписания учебы
+        self.schedule_text = tk.Text(master)
+        self.schedule_text.pack()
+
+        # Загружаем расписание учебы
+        self.load_schedule()
+
+        # Обновляем дату и время каждую секунду
+        self.update_date_time()
+
+    def update_date_time(self):
+        now = datetime.now()
+        formatted_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        self.label_date_time.config(text=formatted_date_time)
+        self.master.after(1000, self.update_date_time)
+
+    def recognize_face(self):
+        # Загрузка предварительно обученного классификатора для распознавания лиц
+        face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+        # Запуск видеопотока с веб-камеры
+        cap = cv2.VideoCapture(0)
+
+        while True:
+            # Захват кадра
+            ret, frame = cap.read()
+
+            # Поиск лиц на кадре
+            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+            faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+            # Отображение прямоугольника вокруг лиц
+            for (x, y, w, h) in faces:
+                cv2.rectangle(frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
+
+            # Отображение кадра
+            cv2.imshow('Face Recognition', frame)
+
+            # Ожидание нажатия клавиши "q" для выхода из цикла
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        # Освобождение ресурсов и закрытие окон OpenCV
+        cap.release()
+        cv2.destroyAllWindows()
+
+    def load_schedule(self):
+        # Вставляем расписание учебы в текстовое поле
+        schedule = "Ваше расписание учебы:\nПонедельник: Математика\nВторник: Физика\nСреда: Химия\n"
+        self.schedule_text.insert(tk.END, schedule)
+
+def main():
+    root = tk.Tk()
+    app = FaceRecognitionApp(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
