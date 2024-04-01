@@ -2,7 +2,6 @@ import dlib
 import cv2
 import json
 import os
-import time
 from scipy.spatial import distance
 
 sp = dlib.shape_predictor('bot/shape_predictor_68_face_landmarks.dat')
@@ -11,7 +10,7 @@ detector = dlib.get_frontal_face_detector()
 face_cascade = cv2.CascadeClassifier('bot/haarcascade_frontalface_default.xml')
 
 def register():
-    def update_json_data(json_data, group, number, name, surname, face_descriptor):
+    def update_json_data(json_data, face_descriptor):
         face_descriptor_list = [value for value in face_descriptor]
         
         data = {
@@ -32,26 +31,13 @@ def register():
 
 
         def det_f(frame):
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5, minSize=(30, 30))
+            gray = cv2.cvtColor(frame)
+            faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3)
                         
-            if len(faces) > 0:
-                return True
-            else:
-                return False
                             
         cam = cv2.VideoCapture(0)
         print ("Tiek veikta registrācija")
         screen = None
-        while True:
-            ret, frame = cam.read()
-            if ret:
-                if det_f(frame):
-                    screen = frame.copy()
-                    break
-                else:
-                    print("Jūsu seja nav atpazīta, lūdzu skataties uz kameru!")
-                    time.sleep(1.5)
                     
         dets = detector(screen, 1)
         for k, d in enumerate(dets):
@@ -73,7 +59,7 @@ def register():
         update_json_data(json_data, group, number, name, surname, face_descriptor)
 
         with open(output_file, 'w', encoding='utf-8') as json_file:
-            json.dump(json_data, json_file, ensure_ascii=False, indent=4)
+            json.dump(json_data, json_file, indent=4)
         print("Paldies", name, surname, "tu esi registrets!")
                 
 def authentication():
@@ -85,24 +71,9 @@ def authentication():
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5, minSize=(30, 30))
         
-        if len(faces) > 0:
-            return True
-        else:
-            return False
-        
     cap = cv2.VideoCapture(0)
     print("Tiek veikta autentifikācija")
     screenshot = None
-
-    while True:
-        ret, frame = cap.read()
-        if ret:
-            if detect_faces(frame):
-                screenshot = frame.copy()
-                break
-            else:
-                print("Jūsu seja nav atpazīta, lūdzu skataties uz kameras pusi!")
-                time.sleep(1.5)
                 
     dets_webcam = detector(screenshot, 1)
             
@@ -127,9 +98,6 @@ def authentication():
                 print("Nav atrastas līdzības, meiginiet vēl reiz!")
                 authentication()
             case _:
-                for match in matchees:
-                    print("Grupa: ", match['group'], match['number'])
-                    print("Vārds Uzvārds ", match['name'],match['surname'])
                 cap.release()
                 cv2.destroyAllWindows()
                 print (a)
