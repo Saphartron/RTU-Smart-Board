@@ -4,10 +4,10 @@ import json
 import os
 from skimage import io
 
-sp = dlib.shape_predictor('Authenticator/bot/shape_predictor_68_face_landmarks.dat')
-facerec = dlib.face_recognition_model_v1('Authenticator/bot/dlib_face_recognition_resnet_model_v1.dat')
+sp = dlib.shape_predictor('bot/shape_predictor_68_face_landmarks.dat')
+facerec = dlib.face_recognition_model_v1('bot/dlib_face_recognition_resnet_model_v1.dat')
 detector = dlib.get_frontal_face_detector()
-face_cascade = cv2.CascadeClassifier('Authenticator/bot/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('bot/haarcascade_frontalface_default.xml')
 
 def update_json_data(json_data, group, number, name, surname, face_descriptor):
     face_descriptor_list = [value for value in face_descriptor]
@@ -22,11 +22,19 @@ def update_json_data(json_data, group, number, name, surname, face_descriptor):
     json_data.append(data)
 
 if __name__ == "__main__":
-    group = input("Ievadiet kursu: ")
-    number = input("Ievadiet numuru: ")
-    name = input("Ievadiet vārdu: ")
-    surname = input("Ievadiet uzvārdu: ")
-    img1 = io.imread('testfavecapt/f8.jpg')
+    print("Ievadiet kursu: ")
+    print("Pemēram Informacijas Tehnologijas")
+    group = input("")
+    print("Ievadi apmācibas gadu: ")
+    ynumber = input("")
+    print("Ievadiet grupas numuru: ")
+    number = input("")
+    print("Ievadiet vārdu: ")
+    name = input("")
+    print("Ievadiet uzvārdu: ")
+    surname = input("")
+    
+    img1 = io.imread('f2.jpg')
     dets = detector(img1, 1)
 
     for k, d in enumerate(dets):
