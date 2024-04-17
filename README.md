@@ -2,8 +2,13 @@
 <h3></h3>
 <h3>Emils Sokolovs</h3>- Расписание, GUI
 <h3>Vilnis Kokins</h3> - Распознавание и сравнение лица,GUI
+<h3></h3>
+<h3></h3>
+<h3>
+
+https://github.com/Saphartron/RTU-Smart-Board/assets/64406382/e9e94f08-0436-4014-8207-d8911dcfd9ec
+
+</h3>
 
 
-
-https://github.com/Saphartron/RTU-Smart-Board/assets/64406382/44674b42-5cc4-4615-8e25-5cbc7d21ad60
 
